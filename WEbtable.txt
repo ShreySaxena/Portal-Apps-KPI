@@ -1,0 +1,48 @@
+public class table { 
+	
+ 
+ WebDriver driver = new InternetExplorerDriver();
+ @BeforeTest
+    public void setup() throws Exception { 
+         driver.manage().window().maximize();
+         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+         driver.get("http://drmsap01.walgreens.com:8080/SNETMWBWeb/servlet/walgreens.mwb.servlet.MWBServlet/Page?est=E&rloc=C&area=S&type=T&cmp=dy&legal=true&ar=corporateuser&usrtype=C&pg=R&tabid=2&dept=F&sup=Y&dtl=C&id=307&tf=DA
+); 
+    } 
+ 
+  @AfterTest
+ public void tearDown() throws Exception { 
+   driver.quit();
+     } 
+  
+ @Test
+ public void print_data(){
+ 
+ //To count number of rows In table.  
+ int Row_count = driver.findElements(By.xpath("//TABLE[@id='datatable']/TBODY/TR")).size();
+ System.out.println("Number Of Rows = "+Row_count);
+ 
+ //To count number of columns In table.
+ int Col_count = driver.findElements(By.xpath("//TABLE[@id='datatable']/TBODY/TR[1]/TD")).size();
+ System.out.println("Number Of Columns = "+Col_count);
+ 
+ //divided xpath In three parts to pass Row_count and Col_count values.
+ String first_part = "//TABLE[@id='datatable']/TBODY/TR[";
+ String second_part = "]/TD[";
+ String third_part = "]";
+ 
+ //loop for number of rows.
+ for (int i=1; i<=Row_count; i++){
+  //loop for number of columns.
+  for(int j=1; j<=Col_count; j++){
+   //final xpath of specific cell as per values of i and j.
+   String final_xpath = first_part+i+second_pa.rt+j+third_part;
+   //retrieve data from located cell and print It.
+   String Table_data = driver.findElement(By.xpath(final_xpath)).getText();
+   System.out.print(Table_data +"  ");   
+  }
+   System.out.println("");
+   System.out.println("");  
+ } 
+ }
+}
